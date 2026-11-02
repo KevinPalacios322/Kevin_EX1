@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { OnInit } from '@angular/core';
+import id from '@angular/common/locales/extra/id';
 
 interface libro {
   id: number;
@@ -55,6 +56,15 @@ export class Libro implements OnInit {
       autor: this.autor
     };
     this.libros.push(nuevoLibro);
+    localStorage.setItem('Libros', JSON.stringify(this.libros));
+  }
+
+  EliminarLibro(id: number) {
+
+    if (!confirm('¿Está seguro de que desea eliminar este libro?')){ 
+      return;
+  }
+    this.libros = this.libros.filter(libro => libro.id !== id);
     localStorage.setItem('Libros', JSON.stringify(this.libros));
   }
 
