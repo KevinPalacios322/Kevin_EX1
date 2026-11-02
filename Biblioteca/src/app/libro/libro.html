@@ -1,3 +1,31 @@
 <p>libro works!</p>
 
+<h1>Mostrar Libros</h1>
+
+@if(libros.length > 0) {
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Título</th>
+        <th>Autor</th>
+       
+      </tr>
+    </thead>
+    <tbody>
+      @for (libro of libros; track libro.id) {
+        <tr>
+          <td>{{libro.id}}</td>
+          <td>{{libro.titulo}}</td>
+          <td>{{libro.autor}}</td>
+          
+        </tr>
+      }
+
+    </tbody>
+  </table>
+} @else {
+  <p>No hay libros disponibles.</p>
+}
+
 <button type="button" (click)="CerrarSesion()">Cerrar Sesión</button>
