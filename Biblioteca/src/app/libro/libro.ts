@@ -9,7 +9,7 @@ interface libro {
   autor: string;
 }
 @Component({
-  imports: [],
+  imports: [FormsModule],
   selector: 'app-libro',
   styleUrl: './libro.css',
   templateUrl: './libro.html',
@@ -27,13 +27,9 @@ export class Libro implements OnInit {
 
 
   ngOnInit() {
-    
-    this.libros.push({id: 1, titulo: 'El Principito', autor: 'Antoine de Saint-Exupéry'});
 
+    this.libros = JSON.parse(localStorage.getItem('Libros') || '[]');
     
-
-    localStorage.setItem('Libros', JSON.stringify(this.libros));
-    this.libros = JSON.parse( localStorage.getItem('Libros') || '[]');
 
 
     if (localStorage.getItem('SesionIniciada') !== 'true') {
@@ -42,7 +38,26 @@ export class Libro implements OnInit {
 
   }
 
-  
+  InsertarLibro() {
+    if (this.titulo.trim() === '' || this.autor.trim() === '') {
+      alert('Por favor, complete todos los campos.');
+      return;
+    }
+    let UltimoId = 0;
+    for (let i = 0; i < this.libros.length; i++) {
+      if (this.libros[i].id > UltimoId) {
+        UltimoId = this.libros[i].id;
+      }
+    }
+    const nuevoLibro: libro = {
+      id: UltimoId + 1,
+      titulo: this.titulo,
+      autor: this.autor
+    };
+    this.libros.push(nuevoLibro);
+    localStorage.setItem('Libros', JSON.stringify(this.libros));
+  }
+
   CerrarSesion() {
     localStorage.setItem('SesionIniciada', 'false');
     window.location.reload();
