@@ -20,7 +20,11 @@ export class Libro implements OnInit {
   id: number = 0;
   titulo: string = ''
   autor: string = '';
-  libros: libro[] = []
+  libros: libro[] = [];
+  editable: boolean = false;
+  idActualizar: number = 0;
+  tituloActualizar: string = '';
+  autorActualizar: string = '';
 
 
   constructor(private router: Router) {}
@@ -66,6 +70,27 @@ export class Libro implements OnInit {
   }
     this.libros = this.libros.filter(libro => libro.id !== id);
     localStorage.setItem('Libros', JSON.stringify(this.libros));
+  }
+
+  Apartado_ActualizarLibro(id: number) {
+    this.editable = true;
+    this.idActualizar = id;
+  }
+
+  ActualizarLibro(id: number) {
+
+
+    for (let i = 0; i < this.libros.length; i++) {
+      if (this.libros[i].id === this.idActualizar) {
+        this.titulo = this.libros[i].titulo;
+        this.autor = this.libros[i].autor;
+        localStorage.setItem('Libros', JSON.stringify(this.libros));
+        this.editable = false;
+        alert('Libro actualizado correctamente.');
+        break;
+      }}
+   
+    
   }
 
   CerrarSesion() {
